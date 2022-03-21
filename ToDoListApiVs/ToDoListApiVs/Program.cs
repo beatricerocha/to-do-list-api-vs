@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddCors();
 builder.Services.AddDbContext<TarefaContext>(opt =>
     opt.UseInMemoryDatabase("TodoList"));
 //builder.Services.AddSwaggerGen(c =>
@@ -14,6 +15,12 @@ builder.Services.AddDbContext<TarefaContext>(opt =>
 //});
 
 var app = builder.Build();
+app.UseCors( builder => {
+    builder.AllowAnyOrigin();
+    builder.AllowAnyMethod();
+    builder.AllowAnyHeader();
+});
+
 
 // Configure the HTTP request pipeline.
 if (builder.Environment.IsDevelopment())
